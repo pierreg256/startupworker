@@ -1,0 +1,10 @@
+{
+  "name": "worker",
+  "version": "0.0.0",
+  "description": "worker",
+  "main": "app.js",
+  "author": {
+    "name": "pigilot",
+    "email": ""
+  }
+}
