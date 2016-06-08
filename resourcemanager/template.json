@@ -175,7 +175,7 @@
             }
         },
         {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "type": "extensions",
             "name": "[concat(variables('vmName'), variables('extensionName'))]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[resourceGroup().location]",
