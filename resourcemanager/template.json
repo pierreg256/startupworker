@@ -1,4 +1,5 @@
 
+
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
@@ -58,9 +59,12 @@
         "vmName": "[concat(variables('scenarioPrefix'),'VM')]",
         "virtualNetworkName": "[concat(variables('scenarioPrefix'),'Vnet')]",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-        "fileUris": "https://raw.githubusercontent.com/pierreg256/startupworker/master/setupscript/setupscript.sh",
+        "fileUris": "https://raw.githubusercontent.com/pierreg256/startupworker/master/setupscript/setupscript.sh"
+        ,
         "commandToExecute": "setupscript.sh",
-        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
+        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+        "monextensionScriptFileName": "monextension.sh",
+        "monextensionScriptFilePath": "[concat('Downloads/CustomScripts/', variables('monextensionScriptFileName'))]"
     },
     "resources": [
         {
@@ -172,26 +176,33 @@
                         }
                     ]
                 }
-            }
-        },
-        {
-            "type": "extensions",
-            "name": "[concat(variables('vmName'), variables('extensionName'))]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-            ],
-            "properties": {
-                "publisher": "Microsoft.OSTCExtensions",
-                "type": "CustomScriptForLinux",
-                "typeHandlerVersion": "1.4",
-                "autoUpgradeMinorVersion": true,
-                "settings": {
-                    "fileUris": "[split(variables('fileUris'), ' ')]",
-                    "commandToExecute": "[variables('commandToExecute')]"
+            },
+            "resources": [
+              {
+                "name": "[concat(variables('vmName'), variables('extensionName'))]",
+                "type": "extensions",
+                "location": "[resourceGroup().location]",
+                "apiVersion": "2015-06-15",
+                "dependsOn": [
+                  "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+                ],
+                "tags": {
+                  "displayName": "monextension"
+                },
+                "properties": {
+                  "publisher": "Microsoft.OSTCExtensions",
+                  "type": "CustomScriptForLinux",
+                  "typeHandlerVersion": "1.4",
+                  "autoUpgradeMinorVersion": true,
+                  "settings": {
+                    "fileUris": [
+                      "[variables('fileUris')]"
+                    ],
+                    "commandToExecute": "[concat('sh ', variables('commandToExecute'))]"
+                  }
                 }
-            }
+              }
+            ]
         }
     ]
 }
