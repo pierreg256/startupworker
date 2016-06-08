@@ -2,7 +2,7 @@
   ;
 
 //Lets define a port we want to listen to
-const PORT=8080;
+const PORT=80;
 
 //We need a function which handles requests and send response
 function handleRequest(request, response) {
