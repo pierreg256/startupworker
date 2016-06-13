@@ -1,0 +1,34 @@
+﻿{
+  "value": [
+    {
+      "keyName": "iothubowner",
+      "primaryKey": "FJsdnTuf4rp7usZqzU6+RMcy2Aa5XNA2gKiNWYg/mu4=",
+      "secondaryKey": "Wz95aK5e0+fWBGOL0KcZMb/5WEiymWj+Jthza7xxhB8=",
+      "rights": "RegistryWrite, ServiceConnect, DeviceConnect"
+    },
+    {
+      "keyName": "service",
+      "primaryKey": "SU9qoFDY3qRyHpCgqA0d/OTD/llmX4vfghC3MkXlKms=",
+      "secondaryKey": "Mz2niR+FDOcwv+uTdaWFT0GZOBWmMiJDj87O6mHWV7I=",
+      "rights": "ServiceConnect"
+    },
+    {
+      "keyName": "device",
+      "primaryKey": "GrZMppdEYNGR5UmwVlIuwIqhCXnR1wlhHN6VoYJc2aY=",
+      "secondaryKey": "3B4rv2WUw6A6QVf/dE6+dsslS3vKTEwwFGnAKElKAxo=",
+      "rights": "DeviceConnect"
+    },
+    {
+      "keyName": "registryRead",
+      "primaryKey": "8mhkDMJ9++d8sW7twAeaAV662yoGRFFoC7yLDYL0JzM=",
+      "secondaryKey": "wrZB0yb2MyaoV3jSQ3ik/URkf69EwxKipCqh3/VcdLk=",
+      "rights": "RegistryRead"
+    },
+    {
+      "keyName": "registryReadWrite",
+      "primaryKey": "G9qLLTw5xOo16loghqV+sy1TRqDD6ki/ToNYILjFOEI=",
+      "secondaryKey": "hV3YkyStGgr96QxeKvpReX9law1WpnJkGZAj7kmjchU=",
+      "rights": "RegistryWrite"
+    }
+  ]
+}

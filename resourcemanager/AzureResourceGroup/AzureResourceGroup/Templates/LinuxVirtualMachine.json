@@ -37,8 +37,8 @@
   },
   "variables": {
     "addressPrefix": "10.0.0.0/16",
-    "dnsName": "[toLower(concat(parameters('dnsPrefix'),uniqueString(subscription().subscriptionId)))]",
-    "hubName":  "[variables('dnsName')]",
+    "dnsName": "[toLower(concat(parameters('dnsPrefix'),uniqueString(parameters('dnsPrefix'),subscription().subscriptionId)))]",
+    "hubName": "[variables('dnsName')]",
     "imageOffer": "UbuntuServer",
     "imagePublisher": "Canonical",
     "nicName": "[concat(parameters('dnsPrefix'), 'VMNic') ]",
@@ -203,7 +203,8 @@
         "osProfile": {
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
+          "adminPassword": "[parameters('adminPassword')]",
+          "customData": "[base64(string(listKeys(resourceId('Microsoft.Devices/IotHubs', variables('hubName')), '2016-02-03')))]"
         },
         "storageProfile": {
           "imageReference": {

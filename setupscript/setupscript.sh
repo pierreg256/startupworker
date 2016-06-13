@@ -14,6 +14,7 @@ git clone https://github.com/pierreg256/startupworker.git
 cd ./startupworker/worker/worker
 
 sudo npm install
+sudo cp /var/lib/cloud/instance/user-data.txt iothub.json
 
 sudo touch sampleapp.service
 sudo chmod 777 sampleapp.service 
