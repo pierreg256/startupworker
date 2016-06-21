@@ -3,16 +3,16 @@
   path = require('path')
   ;
 
+global.appRoot = path.resolve(__dirname);
+
 //Lets define a port we want to listen to
 const PORT=8080;
-const configFile='iothub.json'
-
-global.appRoot = path.resolve(__dirname);
+const configFile=global.appRoot+'iothub.json'
 
 // Get IoTHub configuration
 fs.readFile(configFile, function (err, data){
     if (err) {
-        console.log('No config file found for the IoT Hub...')
+        console.log('No config file ('+configFile+') found for the IoT Hub...')
     } else {
         
         var config;
