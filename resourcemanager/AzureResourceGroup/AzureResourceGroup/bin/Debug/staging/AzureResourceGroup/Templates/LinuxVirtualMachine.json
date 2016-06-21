@@ -37,8 +37,8 @@
   },
   "variables": {
     "addressPrefix": "10.0.0.0/16",
-    "dnsName": "[toLower(concat(parameters('dnsPrefix'),uniqueString(subscription().subscriptionId)))]",
-    "hubName":  "[variables('dnsName')]",
+    "dnsName": "[toLower(concat(parameters('dnsPrefix'),uniqueString(parameters('dnsPrefix'),subscription().subscriptionId)))]",
+    "hubName": "[variables('dnsName')]",
     "imageOffer": "UbuntuServer",
     "imagePublisher": "Canonical",
     "nicName": "[concat(parameters('dnsPrefix'), 'VMNic') ]",
@@ -203,7 +203,8 @@
         "osProfile": {
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
+          "adminPassword": "[parameters('adminPassword')]",
+          "customData": "[base64(string(listKeys(resourceId('Microsoft.Devices/IotHubs', variables('hubName')), '2016-02-03')))]"
         },
         "storageProfile": {
           "imageReference": {
@@ -250,7 +251,7 @@
               "fileUris": [
                 "https://raw.githubusercontent.com/pierreg256/startupworker/master/setupscript/setupscript.sh"
               ],
-              "commandToExecute": "sh setupscript.sh"
+              "commandToExecute": "sh setupscript.sh [base64(concat('{\"hub\":\"',string(reference(variables('hubName')).hostName),'\", \"keys\":',string(listKeys(resourceId('Microsoft.Devices/IotHubs', variables('hubName')), '2016-02-03')),'}'))]"
             }
           }
         }
@@ -276,8 +277,20 @@
   ],
   "outputs": {
     "hubKeys": {
-      "value": "[listKeys(resourceId('Microsoft.Devices/IotHubs', variables('hubName')), '2016-02-03')[0]]",
+      "value": "[listKeys(resourceId('Microsoft.Devices/IotHubs', variables('hubName')), '2016-02-03')]",
       "type": "object"
+    },
+    "hub": {
+      "value": "[reference(variables('hubName'))]",
+      "type": "object"
+    },
+    "encodedHub": {
+      "value": "[base64(concat('{\"hub\":\"',string(reference(variables('hubName')).hostName),'\", \"keys\":',string(listKeys(resourceId('Microsoft.Devices/IotHubs', variables('hubName')), '2016-02-03')),'}'))]",
+      "type": "string"
+    },
+    "website": {
+      "value": "[concat('http://',reference(variables('publicIPAddressName')).dnsSettings.fqdn,':8080/static/index.html')]",
+      "type": "string"
     }
   }
 }

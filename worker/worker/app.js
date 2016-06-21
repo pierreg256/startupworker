@@ -47,10 +47,37 @@ function handleRequest(request, response) {
             console.log("404:", request.method, request.url);
         }
     } else {
-        //response.end('It Works!! Path Hit: ' + request.url);
-        response.statusCode = 404;
-        response.end();
-        console.log("404:", request.method, request.url);
+        if (request.url.startsWith('/devices/') && request.method == 'POST') {
+            var fullBody = '';
+            request.on('data', function (chunk) {
+                fullBody += chunk;
+            });
+            request.on('end', function () {
+                var msg;
+                try {
+                    msg = JSON.parse(fullBody);
+                } catch (e) {
+                    msg = undefined
+                }
+                if (msg && (request.url.split('/').length > 2) && request.url.split('/')[2].length>0) {
+                    msg.deviceId = request.url.split('/')[2];
+                    msg.timestamp = (new Date()).toISOString();
+                    console.log(msg);
+                    console.log("204:", request.method, request.url);
+                    response.statusCode = 204;
+                    response.end();
+                } else {
+                    response.statusCode = 400;
+                    response.end();
+                    console.log("400:", request.method, request.url);
+                }
+            });
+        } else {
+            //response.end('It Works!! Path Hit: ' + request.url);
+            response.statusCode = 404;
+            response.end();
+            console.log("404:", request.method, request.url);
+        }
     }
 }
 
