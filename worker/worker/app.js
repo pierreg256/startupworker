@@ -1,10 +1,13 @@
 ﻿var http = require('http'),
   fs = require('fs')
+  path = require('path')
   ;
 
 //Lets define a port we want to listen to
 const PORT=8080;
 const configFile='iothub.json'
+
+global.appRoot = path.resolve(__dirname);
 
 // Get IoTHub configuration
 fs.readFile(configFile, function (err, data){
@@ -26,8 +29,8 @@ fs.readFile(configFile, function (err, data){
 function handleRequest(request, response) {
     
     if (request.url.startsWith('/static/')) {
-        if (fs.existsSync('.' + request.url)) {
-            fs.readFile('.' + request.url, function (err, data){
+        if (fs.existsSync(global.appRoot + request.url)) {
+            fs.readFile(global.appRoot + request.url, function (err, data){
                 if (err) {
                     response.statusCode = 500;
                     response.end();

@@ -6,7 +6,7 @@ sudo chmod 777 $PROJ_DIR
 sudo rm -rf /opt/myapp
 sudo ln -s $PROJ_DIR /opt/myapp
 
-
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y git nodejs npm 
 
 cd $PROJ_DIR
