@@ -7,7 +7,7 @@ sudo rm -rf /opt/myapp
 sudo ln -s $PROJ_DIR /opt/myapp
 
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y git nodejs npm 
+sudo apt-get install -y git nodejs 
 
 cd $PROJ_DIR
 git clone https://github.com/pierreg256/startupworker.git
