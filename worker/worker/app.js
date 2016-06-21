@@ -7,7 +7,7 @@ global.appRoot = path.resolve(__dirname);
 
 //Lets define a port we want to listen to
 const PORT=8080;
-const configFile=global.appRoot+'iothub.json'
+const configFile=global.appRoot+'/iothub.json'
 
 // Get IoTHub configuration
 fs.readFile(configFile, function (err, data){
